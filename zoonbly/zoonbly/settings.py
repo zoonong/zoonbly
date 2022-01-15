@@ -44,13 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
     'django.contrib.sites',
+    'main',
+    'cart',
 
     # allauth 관련
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.auth0',
+    'allauth.socialaccount.providers.kakao',
 ]
 
 MIDDLEWARE = [
