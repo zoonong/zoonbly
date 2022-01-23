@@ -4,10 +4,11 @@
 <br>
 <div class="container">
     <div class="clearfix">
-        {% if product.image == '0' %}
-            <img src="{% static 'images/noImage.png' %}" alt="사진" class="col-md-6 float-md-end mb-3 ms-md-3 img-thumbnail" alt="..." style="height: 27rem; object-fit:cover;">
-        {% else %}
+        {% if product.image %}
             <img src="{{ product.image.url }}" alt="사진" class="col-md-6 float-md-end mb-3 ms-md-3 img-thumbnail shadows" alt="..." style="height: 27rem; object-fit:cover;">
+        {% else %}
+            <img src="{% static 'images/noImage.png' %}" alt="사진" class="col-md-6 float-md-end mb-3 ms-md-3 img-thumbnail" alt="..." style="height: 27rem; object-fit:cover;">
+            
         {% endif %}
         <div class="card" style="width: 20rem;">
             <div class="card-body">
@@ -17,7 +18,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item">{{product.marcket}}</li>
               <li class="list-group-item">가격 : {{product.price}}</li>
-              <li class="list-group-item">재고 : {{product.stock}}</li>
+              <!-- <li class="list-group-item">재고 : {{product.stock}}</li> -->
               <li class="list-group-item">담은 수 : {{product.cartNum}}</li>
             </ul>
             <div class="card-body">
@@ -60,10 +61,11 @@
         </p>
         <div class="collapse" id="detailImage">
             <div class="card card-body shadows" width : 24rem; object-fit:cover;">
-                {% if product.detailImage == '0' %}
-                    <img src="{% static 'images/noImage.png' %}" alt="사진" alt="...">
-                {% else %}
+                {% if product.detailImage %}
                     <img src="{{ product.detailImage.url }}" alt="사진" alt="...">
+                    
+                {% else %}
+                    <img src="{% static 'images/noImage.png' %}" alt="사진" alt="...">
                 {% endif %}
             </div>
         </div>

@@ -15,15 +15,15 @@
                     <div class="card shadows" style="width: 18rem; height: 30rem; align-items: center; margin-left: 2rem; margin-bottom: 2rem;">
                         <div style="width:17rem; height:18rem; align-items: center;">
                             <a href="{%url 'main:productDetail' product.id %}">
-                                {% if product.image == '0' %}
-                                    <img src="{% static 'images/noImage.png' %}" class="card-img-top" alt="...">
-                                {% else %}
+                                {% if product.image %}
                                     <img src="{{product.image.url}}" class="card-img-top" alt="...">
+                                {% else %}
+                                    <img src="{% static 'images/noImage.png' %}" class="card-img-top" alt="...">
                                 {% endif %}
                             </a>
                         </div>
                         <div class="card-body" style="width: 17rem;">
-                        <h5 class="card-title">{{product.name}}</h5>
+                        <h5 class="card-title">{{product.title}}...</h5>
                         <p class="card-text">{{product.marcket}}</p>
                         <p class="card-text">{{product.summary}}...</p>
                         <a href="{%url 'main:productDetail' product.id %}" class="btn btn-primary btn-sm">MORE</a>
