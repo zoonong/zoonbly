@@ -8,11 +8,39 @@
                 <img src="{% static 'images/banner.jpg' %}" class="card-img" alt="...">
               </div>
         </div>
+        {% if marcketName %}
+        <div class="row">
+            <hr>
+            <div class="card" style="width: fit-content; border: black; border-style: solid;">
+                <div class="card-body">
+                    <h4>
+                        <b>
+                            {{marcketName}}
+                        </b>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if categoryName %}
+        <div class="row">
+            <hr>
+            <div class="card" style="width: fit-content; border-style: none;">
+                <div class="card-body">
+                    <h5>
+                        <b>
+                            {{categoryName}}
+                        </b>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        {% endif %}
         <hr>
         <div class="row">
             {% if product_list %}
                 {% for product in product_list %}
-                    <div class="card shadows" style="width: 18rem; height: 30rem; align-items: center; margin-left: 2rem; margin-bottom: 2rem;">
+                    <div class="card shadows" style="width: 18rem; height: 35rem; align-items: center; margin-left: 2rem; margin-bottom: 2rem;">
                         <div style="width:17rem; height:18rem; align-items: center;">
                             <a href="{%url 'main:productDetail' product.id %}">
                                 {% if product.image %}
@@ -23,8 +51,16 @@
                             </a>
                         </div>
                         <div class="card-body" style="width: 17rem;">
-                        <h5 class="card-title">{{product.title}}...</h5>
-                        <p class="card-text">{{product.marcket}}</p>
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title"><b>{{product.title}}...</b></h5>
+                                </div>
+                                <div class="col" style="text-align: right;">
+                                    <a class="card-title" href="{%url 'main:categoryPage' product.category %}" style="text-decoration:none"><b>{{product.category}}</b></a>
+                                </div>
+                            </div>
+                        <a href="{%url 'main:marcket' product.marcket %}" class="btn btn-outline-dark btn-sm card-text"><b>{{product.marcket}}</b></a>
+                        <hr>
                         <p class="card-text">{{product.summary}}...</p>
                         <a href="{%url 'main:productDetail' product.id %}" class="btn btn-primary btn-sm">MORE</a>
                         </div>

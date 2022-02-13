@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.urls import path
 from .views import *
 
@@ -10,10 +11,14 @@ urlpatterns = [
     path('productEdit/<int:id>', productEdit, name="productEdit"),
     path('productUpdate/<int:id>', productUpdate, name="productUpdate"),
     path('productDelete/<int:id>', productDelete, name="productDelete"),
+    path('opotionNew/<int:productId>', optionNew, name="optionNew"),
+    path('optionCreate/<int:productId>', optionCreate, name="optionCreate"),
     path('questionCreate/<int:productId>', questionCreate, name="questionCreate"),
     path('questionEdit/<int:productId>/<int:questionId>', questionEdit, name="questionEdit"),
     path('questionUpdate/<int:productId>/<int:questionId>', questionUpdate, name="questionUpdate"),
     path('questionDelete/<int:productId>/<int:questionId>', questionDelete, name="questionDelete"),
     path('answerCreate/<int:productId>/<int:questionId>', answerCreate, name="answerCreate"),
     path('search/', search, name='search'),
+    path('marcket/<str:marcket>', marcket, name="marcket"),
+    path('category/<str:category>', categoryPage, name="categoryPage"),
 ]

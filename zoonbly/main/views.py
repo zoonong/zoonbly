@@ -1,6 +1,7 @@
+from unicodedata import category
 from django.core import paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Question, Answer
+from .models import Options, Product, Question, Answer
 from django.utils import timezone
 from django.core.paginator import Paginator
 
@@ -21,10 +22,11 @@ def productCreate(request):
     new_product.name = request.POST['name']
     new_product.writer = request.user
     new_product.marcket = request.POST['marcket']
+    new_product.category = request.POST['category']
     new_product.pub_date = timezone.now()
     new_product.price = request.POST['price']
     # new_product.stock = request.POST['stock']
-    new_product.cartNum = 0
+    # new_product.cartNum = 0
     new_product.description = request.POST['description']
     if request.FILES.get('image'):
         new_product.image = request.FILES.get('image')
@@ -36,11 +38,12 @@ def productCreate(request):
 
 def productDetail(request, id):
     product = get_object_or_404(Product, pk = id)
+    all_options = product.options.all().order_by('-added')
     all_questions = product.questions.all().order_by('-created')
     all_answers = []
     for question in all_questions:
         all_answers += list(Answer.objects.filter(question = question))
-    return render(request, 'productDetail.html', {'product':product, 'questions': all_questions, 'answers':all_answers})
+    return render(request, 'productDetail.html', {'product':product, 'options': all_options, 'questions': all_questions, 'answers':all_answers})
 
 def productEdit(request, id):
     edit_product = Product.objects.get(pk = id)
@@ -115,3 +118,34 @@ def search(request):
     else:
         return render(request, 'search.html')
 
+def optionNew(request, productId):
+    product = get_object_or_404(Product, pk = productId)
+    return render(request, 'optionNew.html', {'product':product})
+
+def optionCreate(request, productId):
+    new_option = Options()
+    new_option.color = request.POST['color']
+    new_option.size = request.POST['size']
+    new_option.stock = request.POST['stock']
+    new_option.price = request.POST['price']
+    new_option.writer = request.user
+    new_option.added = timezone.now()
+    new_option.product = get_object_or_404(Product, pk = productId)
+    new_option.save()
+    return redirect('main:productDetail', productId)
+
+def marcket(request, marcket):
+    products = Product.objects.filter(marcket=marcket)
+    marcketName = marcket
+    paginator = Paginator(products, 4)
+    page = int(request.GET.get('page', 1))
+    product_list = paginator.get_page(page)
+    return render(request, 'home.html', {'product_list':product_list, 'marcketName':marcketName})
+
+def categoryPage(request, category):
+    products = Product.objects.filter(category=category)
+    categoryName = category
+    paginator = Paginator(products, 4)
+    page = int(request.GET.get('page', 1))
+    product_list = paginator.get_page(page)
+    return render(request, 'home.html', {'product_list':product_list, 'categoryName':categoryName})
